@@ -1,0 +1,53 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}FirstGlanceKnox · A clearer view{% endblock %}</title>
+  <meta name="description" content="{{ meta_description|default:'Window cleaning for Knoxville-area homes and businesses. Request your free quote from FirstGlanceKnox.' }}">
+  <meta name="theme-color" content="#03a7fc">
+  <meta property="og:title" content="FirstGlanceKnox · A clearer view">
+  <meta property="og:description" content="{{ meta_description }}">
+  <meta property="og:type" content="website">
+  {% if canonical_url %}<link rel="canonical" href="{{ canonical_url }}"><meta property="og:url" content="{{ canonical_url }}">{% endif %}
+  <link rel="icon" href="{% static 'brand/logo.jpg' %}" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Manrope:wght@400;500;600;650;700;750;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/site.css' %}">
+  {% if business_schema %}<script type="application/ld+json">{{ business_schema|safe }}</script>{% endif %}
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="{% url 'marketing:home' %}" aria-label="FirstGlanceKnox home"><img src="{% static 'brand/logo.jpg' %}" width="46" height="46" alt=""><span>FirstGlance<span class="brand-knox">Knox</span><small>WINDOW CLEANING</small></span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation"><span class="menu-icon" aria-hidden="true"></span><span>Menu</span></button>
+      <nav class="primary-navigation" id="primary-navigation" aria-label="Main navigation">
+        <a href="{% url 'marketing:residential' %}" {% if kind == 'residential' %}aria-current="page"{% endif %}>Residential</a>
+        <a href="{% url 'marketing:commercial' %}" {% if kind == 'commercial' %}aria-current="page"{% endif %}>Commercial</a>
+        <a href="{% url 'marketing:gallery' %}" {% if request.resolver_match.url_name == 'gallery' %}aria-current="page"{% endif %}>Our work</a>
+        <a href="{% url 'marketing:about' %}">About us</a>
+        <span class="nav-divider" aria-hidden="true"></span>
+        <a class="portal-link" href="{% url 'accounts:login' %}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg>Client login</a>
+        <a class="button button-small" href="{% url 'marketing:quote' %}">Get a free quote <span aria-hidden="true">↗</span></a>
+      </nav>
+    </div>
+  </header>
+  {% if messages %}<div class="container messages" role="status">{% for message in messages %}<p class="notice {{ message.tags }}">{{ message }}</p>{% endfor %}</div>{% endif %}
+  <main id="main-content">{% block content %}{% endblock %}</main>
+  <footer class="site-footer">
+    <div class="container footer-top">
+      <div class="footer-brand"><a class="brand brand-light" href="{% url 'marketing:home' %}"><img src="{% static 'brand/logo.jpg' %}" width="48" height="48" alt=""><span>FirstGlance<span class="brand-knox">Knox</span><small>WINDOW CLEANING</small></span></a><p>Clear windows.<br>A fresh perspective.</p><span class="local-label"><span class="status-dot"></span> Knoxville, Tennessee</span></div>
+      <div><h2>Explore</h2><a href="{% url 'marketing:residential' %}">Residential</a><a href="{% url 'marketing:commercial' %}">Commercial</a><a href="{% url 'marketing:gallery' %}">Our work</a><a href="{% url 'marketing:about' %}">About us</a></div>
+      <div><h2>Good to know</h2><a href="{% url 'marketing:areas' %}">Service area</a><a href="{% url 'marketing:faq' %}">Frequently asked questions</a><a href="{% url 'accounts:login' %}">Client portal</a><a href="{% url 'marketing:contact' %}">Contact</a></div>
+      <div class="footer-quote"><h2>Let a little more light in.</h2><p>Tell us about your home or business.<br>We’ll take it from there.</p><a href="{% url 'marketing:quote' %}" class="text-link light">Request your free quote <span aria-hidden="true">↗</span></a>{% if business_email %}<a href="mailto:{{ business_email }}">{{ business_email }}</a>{% endif %}</div>
+    </div>
+    <div class="container footer-bottom"><span>© {% now "Y" %} FirstGlanceKnox. All rights reserved.</span><div><a href="{% url 'marketing:privacy' %}">Privacy</a><a href="{% url 'marketing:terms' %}">Terms</a><span>Made for a clearer Knoxville.</span></div></div>
+  </footer>
+  <script src="{% static 'js/site.js' %}" defer></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

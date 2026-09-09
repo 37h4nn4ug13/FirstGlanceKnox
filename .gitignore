@@ -1,0 +1,17 @@
+.venv/
+.env
+.env.*
+!.env.example
+.local/
+__pycache__/
+*.py[cod]
+*.sqlite3
+media/
+private_media/
+staticfiles/
+.pytest_cache/
+.ruff_cache/
+test-results/
+playwright-report/
+node_modules/
+*.log

@@ -1,0 +1,17 @@
+Django>=5.2,<5.3
+psycopg[binary]>=3.2,<4
+celery[redis]>=5.6,<5.7
+Pillow
+reportlab
+django-storages
+boto3
+python-dotenv
+dj-database-url
+whitenoise
+waitress
+pywebpush
+pytest
+pytest-django
+factory-boy
+playwright
+ruff

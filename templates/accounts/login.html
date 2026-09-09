@@ -1,0 +1,4 @@
+{% extends 'accounts/base.html' %}{% block title %}Sign in · FirstGlanceKnox{% endblock %}{% block account_content %}
+<span class="account-eyebrow">A clearer workday</span><h1>Welcome back.</h1><p>Sign in to see your appointments, estimates, or crew workspace.</p>
+<form method="post">{% csrf_token %}{{ form.as_p }}{% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}<button type="submit">Sign in <span aria-hidden="true">&nbsp;→</span></button></form><p><a href="{% url 'accounts:password_reset' %}">Forgot your password?</a></p>
+{% endblock %}

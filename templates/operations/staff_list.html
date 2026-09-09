@@ -1,0 +1,8 @@
+{% extends 'operations/base.html' %}
+{% block content %}
+{% url 'accounts:staff_invite' as invite_url %}
+{% include 'operations/_heading.html' with subtitle='People, permissions, and the next step for every employee.' action_url=invite_url action_label='Invite employee' %}
+<form method="get" class="search-form"><label class="sr-only" for="team-search">Search employees</label><input id="team-search" name="q" value="{{ query }}" placeholder="Search name or email"><button class="button secondary">Search</button></form>
+<div class="filter-tabs"><a href="?q={{ query|urlencode }}">Everyone</a><a href="?state=active&q={{ query|urlencode }}">Active</a><a href="?state=invited&q={{ query|urlencode }}">Invited</a><a href="?state=inactive&q={{ query|urlencode }}">Inactive</a></div>
+<section class="panel"><h2>Employees</h2>{% for profile in profiles %}<div class="record-row"><div class="record-copy"><a href="{% url 'accounts:staff_detail' profile.user.public_id %}"><strong>{{ profile.display_name }}</strong></a><small>{{ profile.user.email }}</small><p>{% for role in profile.user.groups.all %}<span class="badge">{{ role.name }}</span> {% endfor %}{% if profile.user.is_superuser %}<span class="badge">Protected owner</span>{% endif %}</p></div><span class="badge">{{ profile.get_onboarding_state_display }}</span></div>{% empty %}<div class="empty-state"><strong>No matching employees.</strong><p>Invite an employee or try another search.</p></div>{% endfor %}</section>
+{% endblock %}

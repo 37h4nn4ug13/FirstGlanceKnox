@@ -1,0 +1,28 @@
+{% extends 'operations/base.html' %}
+{% block content %}
+<a class="back-link" href="{{ back_url }}">← Back to details</a>
+{% include 'operations/_heading.html' with subtitle='All appointment times are Knoxville local time.' %}
+<div class="content-grid">
+  <section class="panel">
+    <div class="eyebrow">{{ job.number }} · Current appointment</div>
+    <h2 class="spacer">{{ job.customer }}</h2>
+    <p>{{ job.property.address }}</p>
+    <dl class="definition-list">
+      <div><dt>Start</dt><dd>{{ job.scheduled_start|date:'D, M j, Y · g:i A' }}</dd></div>
+      <div><dt>Finish</dt><dd>{{ job.scheduled_end|date:'D, M j, Y · g:i A' }}</dd></div>
+      <div><dt>Status</dt><dd>{{ job.get_status_display }}</dd></div>
+      {% if offer %}<div><dt>Cleaner</dt><dd>{{ offer.cleaner }}</dd></div><div><dt>Fixed pay</dt><dd>${{ offer.fixed_amount }}</dd></div>{% endif %}
+    </dl>
+    <h3 class="spacer">Service scope</h3><p>{{ job.scope|linebreaksbr }}</p>
+  </section>
+  <section class="panel">
+    <h2>Review the change</h2>
+    <p>{{ explanation }}</p>
+    <form method="post">
+      {% csrf_token %}
+      {% include 'operations/_fields.html' %}
+      <div class="actions"><button class="button{% if destructive %} danger{% endif %}" type="submit">{{ submit_label }}</button><a class="button secondary" href="{{ back_url }}">Keep current details</a></div>
+    </form>
+  </section>
+</div>
+{% endblock %}
